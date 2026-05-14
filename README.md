@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 # IsecInsurance
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.10.
@@ -60,4 +60,3 @@ Angular CLI does not come with an end-to-end testing framework by default. You c
 For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
 =======
 # isec-insurance-platform
->>>>>>> 57bb3516400f8e8a1bc2789e921581d6736d7203
