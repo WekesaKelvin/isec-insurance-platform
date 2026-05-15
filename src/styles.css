@@ -35,7 +35,7 @@
   --ink-deep: #02072a;
   --blue: #07155a;
   --blue-soft: #12328a;
-  --aqua: #9af3ff;
+  --aqua: #9EF2FF;
   --aqua-strong: #73e7f2;
   --orange: #fb8352;
   --gold: #f7b23a;
@@ -381,6 +381,14 @@ button {
 .product-card[data-product='motor'] img {
   object-position: 52% 50%;
 }
+.product-card img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 760ms cubic-bezier(0.2, 0.8, 0.2, 1), filter 320ms ease;
+}
 
 .product-card[data-product='home'] img {
   object-position: center;
@@ -561,6 +569,7 @@ button {
 }
 
 .dots {
+  margin-left: 147px;
   gap: 13px;
 }
 
