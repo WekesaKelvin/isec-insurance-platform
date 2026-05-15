@@ -127,7 +127,7 @@ export class App implements OnInit, OnDestroy {
     {
       title: 'Home',
       body: 'Protect the rooms, memories, and everyday comfort your family counts on.',
-      image: 'friends.svg',
+      image: 'family.jpg',
       size: 'portrait',
     },
     {
@@ -151,7 +151,7 @@ export class App implements OnInit, OnDestroy {
     {
       title: 'Home',
       body: 'Protect the rooms, memories, and everyday comfort your family counts on.',
-      image: 'friends.svg',
+      image: 'family.jpg',
       size: 'portrait',
     },
   ];
