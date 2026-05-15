@@ -1,6 +1,5 @@
 <main class="site-shell">
   <section class="hero-section" id="top" aria-label="ISEC Insurance landing page">
-    <div class="ambient ambient-one"></div>
     <div class="ambient ambient-two"></div>
 
     <nav class="site-nav reveal">
@@ -118,12 +117,7 @@
       <div class="service-grid">
         @for (feature of supportFeatures; track feature.title) {
           <article>
-            <span
-              class="line-icon"
-              [class.sun]="feature.icon === 'sun'"
-              [class.folder]="feature.icon === 'folder'"
-              [class.planet]="feature.icon === 'planet'"
-            ></span>
+            <img [src]="imageUrl(feature.image)" [alt]="feature.title + ' icon'" />
             <h3>{{ feature.title }}</h3>
             <p>{{ feature.body }}</p>
           </article>

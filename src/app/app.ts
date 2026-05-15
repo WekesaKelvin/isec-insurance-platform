@@ -125,8 +125,8 @@ export class App implements OnInit, OnDestroy {
 
   protected readonly products: readonly ProductCard[] = [
     {
-      title: 'Home',
-      body: 'Protect the rooms, memories, and everyday comfort your family counts on.',
+      title: 'Business',
+      body: 'Get your SMEs, Mid-size & Corporate businesses insured today.',
       image: 'family.jpg',
       size: 'portrait',
     },
@@ -145,12 +145,12 @@ export class App implements OnInit, OnDestroy {
     {
       title: 'Motor',
       body: 'Trusted cover for private cars, commercial fleets, and daily movement.',
-      image: 'Screenshot 2026-04-27 at 21.40.50 1.svg',
+      image: 'car-guy.png',
       size: 'portrait',
     },
     {
-      title: 'Home',
-      body: 'Protect the rooms, memories, and everyday comfort your family counts on.',
+      title: 'Business',
+      body: 'Get your SMEs, Mid-size & Corporate businesses insured today.',
       image: 'family.jpg',
       size: 'portrait',
     },
@@ -160,17 +160,17 @@ export class App implements OnInit, OnDestroy {
     {
       title: '24x7 Support System',
       body: 'Available at any time of the day and any day of the week.',
-      icon: 'sun',
+      image: 'Sun.svg',
     },
     {
       title: 'Easy Claim System',
       body: 'Streamlined pay out processes within reasonable timelines.',
-      icon: 'folder',
+      image: 'Folder.svg',
     },
     {
       title: 'Digital FootPrint',
       body: 'All services made available online for ease of access.',
-      icon: 'planet',
+      image: 'moon.svg',
     },
   ] as const;
 
@@ -179,7 +179,7 @@ export class App implements OnInit, OnDestroy {
       value: '50+',
       label: 'Insurance Partners',
       body: 'Access quotes from a trusted network of providers.',
-      image: 'Screenshot 2026-04-27 at 21.35.44 2.svg',
+      image: 'african.jpg',
       tone: 'photo',
     },
     {
