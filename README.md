@@ -1,6 +1,6 @@
 # IsecInsurance
 
-This project was generated using version 21.2.10.
+This project was generated using version Angular 21.2.10.
 
 ## Development server
 
