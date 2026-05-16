@@ -216,6 +216,7 @@ export class App implements OnInit, OnDestroy {
     { name: 'Fidelity Insurance', logo: 'fidelity.svg' },
     { name: 'Takaful Insurance', logo: 'Vector (2).svg' },
     { name: 'Jubilee', logo: 'image 5.svg' },
+    {name:'APA',logo:'apa.png'}
   ];
 
   protected readonly testimonials: readonly Testimonial[] = [

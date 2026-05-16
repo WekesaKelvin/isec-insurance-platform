@@ -82,8 +82,8 @@
             [class.product-card-wide]="i === activeProductIndex()"
             [class.is-active]="i === activeProductIndex()"
             [attr.data-product]="product.title.toLowerCase()"
-            (click)="selectProduct(i)"
             [attr.aria-label]="'Show ' + product.title + ' insurance'"
+            (click)="selectProduct(i)"
           >
             <img [src]="imageUrl(product.image)" [alt]="product.title + ' insurance'" />
             <span class="product-title">{{ product.title }}</span>
@@ -100,8 +100,8 @@
             <button
               type="button"
               [class.is-active]="i === activeProductIndex()"
-              (click)="selectProduct(i)"
               [attr.aria-label]="'View ' + product.title + ' insurance'"
+              (click)="selectProduct(i)"
             ></button>
           }
         </div>
