@@ -483,9 +483,6 @@ button {
   box-shadow: none;
   scroll-snap-align: center;
   transform: translateZ(0);
-  animation: product-enter both;
-  animation-range: entry 0% cover 36%;
-  animation-timeline: view(inline);
   transition: transform 320ms cubic-bezier(0.2, 0.8, 0.2, 1), filter 240ms ease, box-shadow 240ms ease;
 }
 
@@ -506,6 +503,10 @@ button {
   opacity: 0;
   transform: translateX(-34%);
   transition: opacity 260ms ease, transform 760ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.product-card.is-active::before {
+  animation: glass-sweep 4.8s cubic-bezier(0.2, 0.8, 0.2, 1) infinite;
 }
 
 .product-card-wide {
@@ -624,9 +625,26 @@ button {
 }
 
 .service-grid article {
+  position: relative;
+  isolation: isolate;
   min-height: 185px;
   padding: 20px clamp(20px, 3vw, 48px);
   border-left: 1px solid rgb(154 243 255 / 28%);
+}
+
+.service-grid article::after {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  top: 4px;
+  left: clamp(2px, 2vw, 26px);
+  width: 106px;
+  aspect-ratio: 1;
+  border-radius: 999px;
+  background: radial-gradient(circle, rgb(154 243 255 / 18%), transparent 68%);
+  opacity: 0.34;
+  transform: scale(0.82);
+  animation: icon-glow 4.8s ease-in-out infinite;
 }
 
 .service-grid article:first-child {
@@ -669,6 +687,28 @@ button {
   border: 2px solid var(--aqua);
   border-top-color: transparent;
   border-radius: 999px;
+}
+
+.service-icon {
+  display: block;
+  width: 58px;
+  height: 58px;
+  margin-bottom: 28px;
+  object-fit: contain;
+  transform-origin: 50% 50%;
+  filter: drop-shadow(0 0 14px rgb(154 243 255 / 16%));
+}
+
+.service-icon-sun {
+  animation: icon-sun-orbit 8.5s linear infinite;
+}
+
+.service-icon-folder {
+  animation: icon-folder-float 5.8s cubic-bezier(0.45, 0, 0.2, 1) infinite;
+}
+
+.service-icon-orbit {
+  animation: icon-orbit-spin 9s linear infinite;
 }
 
 .service-grid h3,
@@ -717,11 +757,32 @@ button {
 }
 
 .wave {
+  position: relative;
   width: 124px;
   height: 22px;
   margin-bottom: 42px;
-  background: repeating-radial-gradient(ellipse at center, transparent 0 9px, var(--aqua) 10px 11px, transparent 12px 22px);
-  mask: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+  overflow: visible;
+}
+
+.wave::before,
+.wave::after {
+  content: '';
+  position: absolute;
+  inset: 50% auto auto 50%;
+  width: 92px;
+  aspect-ratio: 2.6;
+  border: 2px solid rgb(154 243 255 / 78%);
+  border-right-color: transparent;
+  border-left-color: transparent;
+  border-radius: 50%;
+  transform: translate(-50%, -50%) scale(0.72);
+  animation: ripple-ring 2.8s cubic-bezier(0.2, 0.8, 0.2, 1) infinite;
+}
+
+.wave::after {
+  width: 126px;
+  animation-delay: 1.05s;
+  opacity: 0.5;
 }
 
 .growth-section h1 {
@@ -1197,19 +1258,24 @@ button {
 }
 
 .reveal {
-  animation: rise-in 700ms ease both;
+  opacity: 1;
+  transform: none;
 }
 
-@keyframes rise-in {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.landing-hero,
+.product-card,
+.product-card img,
+.service-grid article,
+.growth-section h1,
+.growth-section .shape,
+.metric-card,
+.metric-card img,
+.partner-section h2,
+.partner-marquee,
+.proof-copy,
+.testimonial-card,
+.faq-item {
+  will-change: transform, opacity, filter;
 }
 
 @keyframes menu-drop {
@@ -1258,15 +1324,96 @@ button {
   }
 }
 
-@keyframes product-enter {
-  from {
-    opacity: 0.72;
-    transform: translateX(28px) scale(0.98);
+@keyframes glass-sweep {
+  0%,
+  42% {
+    opacity: 0;
+    transform: translateX(-42%);
   }
 
-  to {
-    opacity: 1;
-    transform: translateX(0) scale(1);
+  58% {
+    opacity: 0.48;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateX(34%);
+  }
+}
+
+@keyframes icon-glow {
+  0%,
+  100% {
+    opacity: 0.2;
+    transform: scale(0.78);
+  }
+
+  50% {
+    opacity: 0.46;
+    transform: scale(1);
+  }
+}
+
+@keyframes icon-sun-orbit {
+  0% {
+    transform: translate3d(0, 0, 0) rotate(0deg) scale(1);
+  }
+
+  35% {
+    transform: translate3d(0, -4px, 0) rotate(126deg) scale(1.04);
+  }
+
+  70% {
+    transform: translate3d(0, 2px, 0) rotate(252deg) scale(0.98);
+  }
+
+  100% {
+    transform: translate3d(0, 0, 0) rotate(360deg) scale(1);
+  }
+}
+
+@keyframes icon-folder-float {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+
+  40% {
+    transform: translate3d(0, -8px, 0) rotate(-2deg);
+  }
+
+  72% {
+    transform: translate3d(0, -3px, 0) rotate(2deg);
+  }
+}
+
+@keyframes icon-orbit-spin {
+  0% {
+    transform: rotate(-18deg) scale(1);
+  }
+
+  50% {
+    transform: rotate(162deg) scale(1.035);
+  }
+
+  100% {
+    transform: rotate(342deg) scale(1);
+  }
+}
+
+@keyframes ripple-ring {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.54);
+  }
+
+  22% {
+    opacity: 0.9;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1.34);
   }
 }
 
@@ -1536,4 +1683,18 @@ button {
   .floating-section-nav {
     display: none;
   }
+}
+
+
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 5px;
+  background: var(--aqua);
+  transform-origin: 0;
+  transform: scaleX(0);
+  z-index: 999;
+  transition: transform 100ms linear;
 }
