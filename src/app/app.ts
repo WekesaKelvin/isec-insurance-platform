@@ -10,6 +10,8 @@ import {
   computed,
   signal,
 } from '@angular/core';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 type CoverageCategory = Readonly<{
   title: string;
@@ -61,6 +63,7 @@ type SectionId = 'top' | 'cover' | 'services' | 'quote' | 'partners' | 'support'
 export class App implements OnInit, OnDestroy {
   protected readonly assetPath = 'theme/assets/images/';
   private productTimer: ReturnType<typeof setInterval> | null = null;
+  private scrollAnimationContext: gsap.Context | null = null;
 
   constructor(@Inject(PLATFORM_ID) private readonly platformId: object) {}
 
@@ -278,6 +281,7 @@ export class App implements OnInit, OnDestroy {
   protected readonly activeProduct = computed(() => this.products[this.activeProductIndex()]);
   protected readonly activeCoverage = computed(() => this.coverages[this.activeCoverageIndex()]);
   private readonly handlePopState = (): void => this.scrollToCurrentPath('smooth');
+  protected readonly scrollProgress = signal(0);
 
   protected imageUrl(fileName: string): string {
     return `${this.assetPath}${fileName}`;
@@ -291,6 +295,7 @@ export class App implements OnInit, OnDestroy {
     }
 
     this.syncFloatingNav();
+    window.setTimeout(() => this.setupScrollAnimations(), 0);
     window.addEventListener('popstate', this.handlePopState);
     window.setTimeout(() => this.scrollToCurrentPath('auto'));
     this.productTimer = setInterval(() => this.nextProduct(), 20000);
@@ -301,6 +306,9 @@ export class App implements OnInit, OnDestroy {
       window.removeEventListener('popstate', this.handlePopState);
     }
 
+    this.scrollAnimationContext?.revert();
+    this.scrollAnimationContext = null;
+
     if (this.productTimer) {
       clearInterval(this.productTimer);
     }
@@ -308,11 +316,14 @@ export class App implements OnInit, OnDestroy {
 
   @HostListener('window:scroll')
   protected syncFloatingNav(): void {
-    if (!isPlatformBrowser(this.platformId)) {
-      return;
-    }
+    if (!isPlatformBrowser(this.platformId)) {return}
 
-    this.showFloatingNav.set(window.scrollY > window.innerHeight * 0.72);
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = docHeight > 0 ? scrollTop / docHeight : 0;
+
+    this.scrollProgress.set(progress);
+    this.showFloatingNav.set(scrollTop > window.innerHeight * 0.72);
   }
 
   protected selectProduct(index: number): void {
@@ -322,6 +333,7 @@ export class App implements OnInit, OnDestroy {
 
   protected toggleCoverageMenu(): void {
     this.isCoverageMenuOpen.update((isOpen) => !isOpen);
+    window.setTimeout(() => ScrollTrigger.refresh(), 0);
   }
 
   protected selectCoverage(index: number): void {
@@ -350,6 +362,213 @@ export class App implements OnInit, OnDestroy {
 
   protected toggleFaq(index: number): void {
     this.openFaqIndex.update((current) => (current === index ? null : index));
+    window.setTimeout(() => ScrollTrigger.refresh(), 0);
+  }
+
+  private setupScrollAnimations(): void {
+    if (!isPlatformBrowser(this.platformId)) {
+      return;
+    }
+
+    gsap.registerPlugin(ScrollTrigger);
+    this.scrollAnimationContext?.revert();
+
+    this.scrollAnimationContext = gsap.context(() => {
+      gsap.to('.landing-hero', {
+        yPercent: -22,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: '.hero-section',
+          start: 'top top',
+          end: 'bottom top',
+          scrub: true,
+        },
+      });
+
+      gsap.fromTo('.product-card', {
+        y: 34,
+        opacity: 0.96,
+        scale: 0.985,
+        filter: 'blur(3px) brightness(1) saturate(1)',
+      }, {
+        y: 0,
+        opacity: 1,
+        scale: 1,
+        filter: 'blur(0px) brightness(1) saturate(1)',
+        stagger: 0.12,
+        ease: 'power2.out',
+        immediateRender: false,
+        scrollTrigger: {
+          trigger: '.product-stage',
+          start: 'top 92%',
+          end: 'top 52%',
+          scrub: 1,
+        },
+      });
+
+      gsap.to('.product-card img', {
+        yPercent: -6,
+        scale: 1.035,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: '.product-stage',
+          start: 'top bottom',
+          end: 'bottom top',
+          scrub: true,
+        },
+      });
+
+      gsap.from('.service-grid article', {
+        x: -72,
+        opacity: 0,
+        stagger: 0.18,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: '.service-band',
+          start: 'top 82%',
+          end: 'top 24%',
+          scrub: 1.5,
+        },
+      });
+
+      gsap.from('.growth-section h1', {
+        scale: 0.72,
+        y: 80,
+        opacity: 0,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: '.growth-section',
+          start: 'top 82%',
+          end: 'top 14%',
+          scrub: 2,
+        },
+      });
+
+      gsap.from('.growth-section .shape-left', {
+        xPercent: -18,
+        yPercent: 12,
+        rotation: -8,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: '.growth-section',
+          start: 'top bottom',
+          end: 'bottom top',
+          scrub: true,
+        },
+      });
+
+      gsap.from('.growth-section .shape-right', {
+        xPercent: 16,
+        yPercent: -10,
+        rotation: 16,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: '.growth-section',
+          start: 'top bottom',
+          end: 'bottom top',
+          scrub: true,
+        },
+      });
+
+      gsap.fromTo('.metric-card', {
+        y: 42,
+        opacity: 0.9,
+        scale: 0.985,
+        filter: 'blur(7px) brightness(1) saturate(0.96)',
+      }, {
+        y: 0,
+        opacity: 1,
+        scale: 1,
+        filter: 'blur(0px) brightness(1) saturate(1)',
+        stagger: 0.1,
+        ease: 'power2.out',
+        immediateRender: false,
+        scrollTrigger: {
+          trigger: '.metric-grid',
+          start: 'top 90%',
+          end: 'top 48%',
+          scrub: 1,
+        },
+      });
+
+      gsap.to('.metric-card img', {
+        yPercent: -5,
+        scale: 1.035,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: '.metric-grid',
+          start: 'top bottom',
+          end: 'bottom top',
+          scrub: true,
+        },
+      });
+
+      gsap.from('.partner-section h2, .partner-marquee', {
+        y: 52,
+        opacity: 0,
+        stagger: 0.14,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: '.partner-section',
+          start: 'top 78%',
+          end: 'top 32%',
+          scrub: 1.2,
+        },
+      });
+
+      gsap.from('.proof-copy', {
+        x: -70,
+        opacity: 0,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: '.proof-section',
+          start: 'top 78%',
+          end: 'top 20%',
+          scrub: 1.5,
+        },
+      });
+
+      gsap.from('.testimonial-card:nth-child(odd)', {
+        x: -70,
+        y: 40,
+        opacity: 0,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: '.proof-section',
+          start: 'top 75%',
+          end: 'top 12%',
+          scrub: 1.5,
+        },
+      });
+
+      gsap.from('.testimonial-card:nth-child(even)', {
+        x: 70,
+        y: -30,
+        opacity: 0,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: '.proof-section',
+          start: 'top 75%',
+          end: 'top 12%',
+          scrub: 1.5,
+        },
+      });
+
+      gsap.from('.faq-item', {
+        x: 50,
+        opacity: 0,
+        stagger: 0.08,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: '.faq-section',
+          start: 'top 80%',
+          end: 'top 25%',
+          scrub: 1.2,
+        },
+      });
+    });
+
+    ScrollTrigger.refresh();
   }
 
   private restartProductTimer(): void {

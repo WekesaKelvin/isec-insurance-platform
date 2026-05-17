@@ -1,4 +1,6 @@
 <main class="site-shell">
+  <div class="scroll-progress" [style.transform]="'scaleX(' + scrollProgress() + ')'" aria-hidden="true"></div>
+
   <section class="hero-section" id="top" aria-label="ISEC Insurance landing page">
     <div class="ambient ambient-two"></div>
 
@@ -115,7 +117,7 @@
     <section class="service-band reveal" id="services">
       <h2>We offer a variety of products customer designed for all your insurance needs being;</h2>
       <div class="service-grid">
-        @for (feature of supportFeatures; track feature.title) {
+        @for (feature of supportFeatures; track feature.title; let i = $index) {
           <article>
             <img [src]="imageUrl(feature.image)" [alt]="feature.title + ' icon'" />
             <h3>{{ feature.title }}</h3>
@@ -139,8 +141,11 @@
     </section>
 
     <section class="metric-grid reveal" aria-label="ISEC proof points">
-      @for (metric of metrics; track metric.label) {
-        <article class="metric-card" [class]="'metric-' + metric.tone">
+      @for (metric of metrics; track metric.label; let i = $index) {
+        <article
+          class="metric-card"
+          [class]="'metric-' + metric.tone"
+        >
           @if (metric.image) {
             <img [src]="imageUrl(metric.image)" alt="" aria-hidden="true" />
           }
@@ -194,7 +199,11 @@
 
     <div class="testimonial-cloud" aria-label="Customer testimonials">
       @for (testimonial of testimonials; track testimonial.title; let i = $index) {
-        <article class="testimonial-card" [class]="'tone-' + testimonial.tone" [style.--card-index]="i">
+        <article
+          class="testimonial-card"
+          [class]="'tone-' + testimonial.tone"
+          [style.--card-index]="i"
+        >
           <div class="stars" aria-label="Five star rating">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
           <h3>{{ testimonial.title }}</h3>
           <p>{{ testimonial.body }}</p>
