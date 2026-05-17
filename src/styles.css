@@ -1691,7 +1691,7 @@ button {
   top: 0;
   left: 0;
   right: 0;
-  height: 3px;
+  height: 5px;
   background: var(--aqua);
   transform-origin: 0;
   transform: scaleX(0);
