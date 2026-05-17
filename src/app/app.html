@@ -119,7 +119,14 @@
       <div class="service-grid">
         @for (feature of supportFeatures; track feature.title; let i = $index) {
           <article>
-            <img [src]="imageUrl(feature.image)" [alt]="feature.title + ' icon'" />
+            <img
+              class="service-icon"
+              [class.service-icon-sun]="i === 0"
+              [class.service-icon-folder]="i === 1"
+              [class.service-icon-orbit]="i === 2"
+              [src]="imageUrl(feature.image)"
+              [alt]="feature.title + ' icon'"
+            />
             <h3>{{ feature.title }}</h3>
             <p>{{ feature.body }}</p>
           </article>

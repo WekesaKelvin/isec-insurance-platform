@@ -386,29 +386,46 @@ export class App implements OnInit, OnDestroy {
       });
 
       gsap.fromTo('.product-card', {
-        y: 34,
-        opacity: 0.96,
-        scale: 0.985,
-        filter: 'blur(3px) brightness(1) saturate(1)',
+        y: 88,
+        opacity: 0.62,
+        scale: 0.92,
+        filter: 'blur(0px) brightness(1) saturate(0.92)',
       }, {
         y: 0,
         opacity: 1,
         scale: 1,
         filter: 'blur(0px) brightness(1) saturate(1)',
-        stagger: 0.12,
-        ease: 'power2.out',
+        stagger: 0.14,
+        ease: 'power3.out',
         immediateRender: false,
         scrollTrigger: {
           trigger: '.product-stage',
-          start: 'top 92%',
-          end: 'top 52%',
+          start: 'top 94%',
+          end: 'top 34%',
+          scrub: 1.15,
+        },
+      });
+
+      gsap.fromTo('.product-title, .product-copy', {
+        y: 36,
+        opacity: 0.36,
+      }, {
+        y: 0,
+        opacity: 1,
+        stagger: 0.08,
+        ease: 'power3.out',
+        immediateRender: false,
+        scrollTrigger: {
+          trigger: '.product-stage',
+          start: 'top 88%',
+          end: 'top 36%',
           scrub: 1,
         },
       });
 
       gsap.to('.product-card img', {
-        yPercent: -6,
-        scale: 1.035,
+        yPercent: -9,
+        scale: 1.065,
         ease: 'none',
         scrollTrigger: {
           trigger: '.product-stage',
@@ -471,29 +488,46 @@ export class App implements OnInit, OnDestroy {
       });
 
       gsap.fromTo('.metric-card', {
-        y: 42,
-        opacity: 0.9,
-        scale: 0.985,
-        filter: 'blur(7px) brightness(1) saturate(0.96)',
+        y: 72,
+        opacity: 0.62,
+        scale: 0.93,
+        filter: 'blur(12px) brightness(1) saturate(0.92)',
       }, {
         y: 0,
         opacity: 1,
         scale: 1,
         filter: 'blur(0px) brightness(1) saturate(1)',
-        stagger: 0.1,
-        ease: 'power2.out',
+        stagger: 0.12,
+        ease: 'power3.out',
         immediateRender: false,
         scrollTrigger: {
           trigger: '.metric-grid',
-          start: 'top 90%',
-          end: 'top 48%',
+          start: 'top 92%',
+          end: 'top 34%',
+          scrub: 1.15,
+        },
+      });
+
+      gsap.fromTo('.metric-card > div', {
+        x: -34,
+        opacity: 0.42,
+      }, {
+        x: 0,
+        opacity: 1,
+        stagger: 0.1,
+        ease: 'power3.out',
+        immediateRender: false,
+        scrollTrigger: {
+          trigger: '.metric-grid',
+          start: 'top 88%',
+          end: 'top 32%',
           scrub: 1,
         },
       });
 
       gsap.to('.metric-card img', {
-        yPercent: -5,
-        scale: 1.035,
+        yPercent: -8,
+        scale: 1.055,
         ease: 'none',
         scrollTrigger: {
           trigger: '.metric-grid',
