@@ -386,9 +386,9 @@ export class App implements OnInit, OnDestroy {
       });
 
       gsap.fromTo('.product-card', {
-        y: 88,
-        opacity: 0.62,
-        scale: 0.92,
+        y: 0,
+        opacity: 0.82,
+        scale: 1,
         filter: 'blur(0px) brightness(1) saturate(0.92)',
       }, {
         y: 0,
