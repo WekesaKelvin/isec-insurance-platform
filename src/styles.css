@@ -371,17 +371,18 @@ button {
 }
 
 .cover-feature img,
-.product-card img,
+.product-card > img:not(.product-butterfly),
 .metric-card img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
-.product-card[data-product='motor'] img {
+.product-card[data-product='motor'] > img:not(.product-butterfly) {
   object-position: 52% 50%;
 }
-.product-card img {
+
+.product-card > img:not(.product-butterfly) {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -390,7 +391,7 @@ button {
   transition: transform 760ms cubic-bezier(0.2, 0.8, 0.2, 1), filter 320ms ease;
 }
 
-.product-card[data-product='home'] img {
+.product-card[data-product='home'] > img:not(.product-butterfly) {
   object-position: center;
 }
 
@@ -537,6 +538,10 @@ button {
   text-transform: uppercase;
 }
 
+.product-card.is-active .product-title {
+  bottom: clamp(118px, 9vw, 150px);
+}
+
 .product-card:not(.product-card-wide) .product-title {
   font-size: clamp(1.75rem, 2.35vw, 2.55rem);
 }
@@ -545,11 +550,35 @@ button {
   bottom: 34px;
 }
 
+.product-card .product-butterfly {
+  position: static;
+  display: inline-block;
+  width: 0.78em;
+  height: 0.78em;
+  margin-top: -0.12em;
+  margin-left: 0.04em;
+  object-fit: contain;
+  vertical-align: top;
+  pointer-events: none;
+  filter: drop-shadow(0 6px 10px rgb(0 0 0 / 28%));
+  animation: butterfly-hover 3.8s ease-in-out infinite;
+}
+
+.product-divider {
+  position: absolute;
+  z-index: 2;
+  right: clamp(22px, 3vw, 40px);
+  bottom: clamp(91px, 7vw, 118px);
+  left: clamp(22px, 3vw, 40px);
+  height: 1px;
+  background: rgb(255 255 255 / 38%);
+}
+
 .product-copy {
   position: absolute;
   z-index: 2;
   right: 22px;
-  bottom: 20px;
+  bottom: clamp(28px, 2.7vw, 42px);
   left: clamp(22px, 3vw, 40px);
   max-width: 36ch;
   color: rgb(255 255 255 / 88%);
@@ -1264,7 +1293,7 @@ button {
 
 .landing-hero,
 .product-card,
-.product-card img,
+.product-card > img:not(.product-butterfly),
 .service-grid article,
 .growth-section h1,
 .growth-section .shape,
@@ -1351,6 +1380,17 @@ button {
   50% {
     opacity: 0.46;
     transform: scale(1);
+  }
+}
+
+@keyframes butterfly-hover {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(-6deg);
+  }
+
+  50% {
+    transform: translate3d(5px, -7px, 0) rotate(8deg);
   }
 }
 

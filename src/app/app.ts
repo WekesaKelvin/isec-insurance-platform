@@ -275,7 +275,7 @@ export class App implements OnInit, OnDestroy {
   protected readonly activeProductIndex = signal(1);
   protected readonly isCoverageMenuOpen = signal(false);
   protected readonly showFloatingNav = signal(false);
-  protected readonly activeCoverageIndex = signal(7);
+  protected readonly activeCoverageIndex = signal(0);
   protected readonly openFaqIndex = signal<number | null>(0);
 
   protected readonly activeProduct = computed(() => this.products[this.activeProductIndex()]);

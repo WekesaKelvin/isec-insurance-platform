@@ -88,8 +88,14 @@
             (click)="selectProduct(i)"
           >
             <img [src]="imageUrl(product.image)" [alt]="product.title + ' insurance'" />
-            <span class="product-title">{{ product.title }}</span>
+            <span class="product-title">
+              {{ product.title }}
+              @if (i === activeProductIndex()) {
+                <img class="product-butterfly" [src]="imageUrl('butterfly.svg')" alt="" aria-hidden="true" />
+              }
+            </span>
             @if (i === activeProductIndex()) {
+              <span class="product-divider" aria-hidden="true"></span>
               <span class="product-copy">{{ product.body }}</span>
             }
           </button>
